@@ -1,0 +1,27 @@
+.landing__wrapper {
+    min-height: 50vh;
+    padding: 1rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.landing__wrapper h1 {
+    font-size: 4rem;
+}
+
+.landing__wrapper Input {
+    padding: 1rem 2rem;
+    width: 70%;
+}
+
+.landing__wrapper Input:focus{
+    box-shadow: none;
+    outline: none;
+}
+
+.landing__wrapper.iconWrapper {
+    background-color: white;
+    border: none;
+}
+    
