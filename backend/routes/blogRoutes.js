@@ -62,11 +62,11 @@ router.put(
   description: req.body.description,
   author: req.body.author,
   category: req.body.category,
-  image: blog.image, // keep existing image
+  src: blog.image, // keep existing image
 };
 
 if (req.file) {
-  updateData.image = req.file.path;
+  updateData.src = req.file.path;
 }
 
       const updatedBlog = await Blog.findByIdAndUpdate(
@@ -107,7 +107,7 @@ router.post(
        description: req.body.description,
        author: req.body.author,
        category: req.body.category,
-       image: req.file.path,
+       src: req.file.path,
        userid: req.user.id, // logged-in user
       });
 

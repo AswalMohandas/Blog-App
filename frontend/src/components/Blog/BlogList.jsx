@@ -38,7 +38,7 @@ function BlogList() {
             onClick={() => navigate(`/blog/${blog._id}`)}
           >
            <img
-            src={blog.image}
+            src={blog.src}
             alt={blog.title}
             className="card-img-top"
             style={{

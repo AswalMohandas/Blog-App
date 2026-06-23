@@ -64,7 +64,7 @@ function BlogDetails() {
   return (
     <div className="container mt-5">
       <img
-        src={blog.image}
+        src={blog.src}
         alt={blog.title}
         className="img-fluid mb-4"
       />

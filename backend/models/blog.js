@@ -19,14 +19,14 @@ const blogSchema = new Schema({
     type: String,
     required: true
   },
-   image: {
+   src: {
   type: String,
   required: true
 },
 userid: {
   type: mongoose.Schema.Types.ObjectId,
   ref: "User",
-  required: true
+
 }
  
 }, { timestamps: true });
