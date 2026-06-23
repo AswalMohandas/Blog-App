@@ -12,7 +12,7 @@ function BlogList() {
   const fetchBlogs = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/blogs/get-all-blogs"
+         "https://your-backend-url.onrender.com/api/blogs/get-all-blogs"
       );
 
       setBlogs(response.data.data);

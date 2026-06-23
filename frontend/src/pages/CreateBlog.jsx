@@ -21,7 +21,7 @@ function CreateBlog() {
       formData.append("src", src);
 
       await axios.post(
-        "http://localhost:5000/api/blogs/create-blog",
+        "https://your-backend-url.onrender.com/api/blogs/create-blog",
         formData,
         {
           headers: {
