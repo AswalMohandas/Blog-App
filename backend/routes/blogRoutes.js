@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Blog = require('../models/blog.js');
 const upload = require('../Middleware/upload.js');
-const auth = require("../middleware/auth");
+const auth = require("../Middleware/auth.js");
 
 
 //get all blogs
