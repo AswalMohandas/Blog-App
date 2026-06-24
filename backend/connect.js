@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Blog = require("./models/Blog");
+const Blog = require("./models/blog.js");
 const blogs = require("./Data.js");
 const cloudinary = require("./config/Cloudinary.js");
 require("dotenv").config();
@@ -15,20 +15,7 @@ async function connectDB() {
   }
 }
 
-//  async function seedBlogs() {
-//   try {
-//     const count = await Blog.countDocuments();
 
-//     if (count === 0) {
-//       await Blog.insertMany(blogs);
-//       console.log("Blogs inserted ✅");
-//     } else {
-//       console.log("Blogs already exist ⚡");
-//     }
-//   } catch (err) {
-//     console.log("Seed Error ❌", err);
-//   }
-// }
 
 async function seedBlogs() {
   try {
