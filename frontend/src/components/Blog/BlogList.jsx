@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
-import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
+
+import api from "../../MainUrl";
 
 
 
@@ -11,8 +13,8 @@ function BlogList() {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get(
-          "http://localhost:5000/api/blogs/get-all-blogs"
+      const response = await api.get(
+           `/api/blogs/get-all-blogs`
       );
 
       setBlogs(response.data.data);

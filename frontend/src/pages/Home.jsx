@@ -32,7 +32,7 @@ function Home({blogs}){
      
      
       <div className="container mt-5">
-        <h1>All Blogs</h1>
+      
 
         {(blogs || []).map((blog, index) => (
           <div key={index} className="card p-3 mb-3">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
+import api from "../MainUrl";
 
 
 function EditBlog() {
@@ -16,8 +16,8 @@ function EditBlog() {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/blogs/blog/${id}`
+        const response = await api.get(
+          `/api/blogs/blog/${id}`
         );
 
         const blog = response.data;
@@ -48,8 +48,8 @@ function EditBlog() {
       formData.append("src", src);
     }
 
-    await axios.put(
-      `http://localhost:5000/api/blogs/blog/${id}`,
+    await api.put(
+      `/api/blogs/blog/${id}`,
    formData,
       {
         headers: {
