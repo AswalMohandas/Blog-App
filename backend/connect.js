@@ -1,50 +1,20 @@
 const mongoose = require("mongoose");
-const Blog = require("./models/blog.js");
-const blogs = require("./Data.js");
-const cloudinary = require("./config/Cloudinary.js");
-require("dotenv").config();
+
+let isConnected = false;
 
 async function connectDB() {
+  if (isConnected) return;
+
   try {
-    await mongoose.connect(process.env.DB_URI );
-    
+    const db = await mongoose.connect(process.env.DB_URI);
+
+    isConnected = db.connections[0].readyState === 1;
+
     console.log("MongoDB Connected ✅");
-  await seedBlogs()
   } catch (err) {
     console.log("MongoDB Error ❌", err);
+    throw err;
   }
 }
 
-
-
-async function seedBlogs() {
-  try {
-    await Blog.deleteMany({});
-
-    const blogsWithCloudinary = [];
-
-    for (const blog of blogs) {
-      const result = await cloudinary.uploader.upload(
-        `./public/images/${blog.src}`,
-        { folder: "blog_images" }
-      );
-
-      blogsWithCloudinary.push({
-        ...blog,
-        src: result.secure_url,
-      });
-    }
-
-    await Blog.insertMany(blogsWithCloudinary);
-
-    console.log("Blogs inserted ✅");
-  } catch (err) {
-    console.log("Seed Error ❌", err);
-  }
-}
-module.exports = {
-  connectDB,
-};
-
-
-
+module.exports = { connectDB };
