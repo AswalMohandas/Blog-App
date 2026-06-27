@@ -37,16 +37,30 @@ const {user, logout} = useUser();
        
    {
   user ? (
-    <>
-      <span className="text-white me-3">
-        Welcome, {user.name}
-      </span>
-       
-       
-      <Button variant="light" onClick={logout} className="me-3">
+    <NavDropdown
+      title={`👤 ${user.name}`}
+      id="profile-dropdown"
+      align="end"
+      className="me-3"
+    >
+      <NavDropdown.Item as={Link} to="/profile">
+        My Profile
+      </NavDropdown.Item>
+
+      <NavDropdown.Item as={Link} to="/my-blogs">
+        My Blogs
+      </NavDropdown.Item>
+
+      <NavDropdown.Item as={Link} to="/create-blog">
+        Create Blog
+      </NavDropdown.Item>
+
+      <NavDropdown.Divider />
+
+      <NavDropdown.Item onClick={logout}>
         Logout
-      </Button>
-    </>
+      </NavDropdown.Item>
+    </NavDropdown>
   ) : (
     <Link to="/login">
       <Button variant="light">
@@ -54,7 +68,7 @@ const {user, logout} = useUser();
       </Button>
     </Link>
   )
-}     
+}
 
     {/* Create new Blog */}
 
