@@ -1,6 +1,5 @@
 
 import { Routes, Route } from "react-router-dom";
-
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
@@ -8,6 +7,7 @@ import AuthRoute from "../components/AuthRoute";
 import BlogDetails from "../pages/BlogDetails";
 import CreateBlog from "../pages/CreateBlog";
 import EditBlog from "../pages/EditBlog";
+import Profile from "../pages/Profile";
 
 function Router() {
 
@@ -36,6 +36,8 @@ function Router() {
        path="/edit-blog/:id"
        element={<EditBlog />}
       />
+
+      <Route path="/profile" element={<Profile/>}/>
       
     </Routes>
   );

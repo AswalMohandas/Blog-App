@@ -28,7 +28,7 @@ function Signup() {
 
       alert("Account created successfully");
 
-      navigate("/login");
+      navigate("/");
 
     } catch (error) {
 

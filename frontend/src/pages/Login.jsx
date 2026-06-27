@@ -26,7 +26,7 @@ function Login() {
 
       // Admin redirect
       if (data.user?.isAdmin) {
-        navigate("/admin");
+        navigate("/");
       } else {
         navigate("/");
       }
