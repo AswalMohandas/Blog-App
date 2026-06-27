@@ -12,9 +12,13 @@ router.get('/get-all-blogs', async (req, res) => {
     const blogs = await Blog.find({});
     res.send({ count: blogs.length, data: blogs });
   } catch (err) {
-    console.log(err);
-    res.status(400).send({ message: "something went wrong" });
-  }
+  console.error("GET ALL BLOGS ERROR:", err);
+
+  res.status(500).send({
+    message: err.message,
+    error: err
+  });
+}
 });
 
 
