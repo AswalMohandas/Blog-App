@@ -22,6 +22,25 @@ app.use("/images", express.static("public/images"));
 app.get("/", (req, res) => {
   res.send("Server Working");
 });
+app.get("/test-db", async (req, res) => {
+  try {
+    const Blog = require("./models/blog");
+
+    const blogs = await Blog.find({});
+
+    res.json({
+      success: true,
+      count: blogs.length,
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+});
 
 // API Routes
 app.use("/api/auth", authRoutes);
