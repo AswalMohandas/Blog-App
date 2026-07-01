@@ -1,0 +1,261 @@
+/* ============================================================
+   ALL USERS PAGE STYLES
+   ============================================================ */
+
+.users-page {
+  min-height: 100vh;
+  padding-top: 90px;
+  padding-bottom: 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.users-orb-1 {
+  position: fixed;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(139,92,246,0.12), transparent 70%);
+  top: -100px; right: -100px;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.users-orb-2 {
+  position: fixed;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(0,212,255,0.07), transparent 70%);
+  bottom: -100px; left: -100px;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.users-container {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ─── Header ────────────────────────────────────────────────── */
+.users-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.5s ease both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.users-header-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(0,212,255,0.1));
+  border: 1px solid rgba(139,92,246,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: #8b5cf6;
+  margin: 0 auto 1.2rem;
+  animation: iconPulse 3s ease infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(139,92,246,0.2); }
+  50%       { box-shadow: 0 0 40px rgba(139,92,246,0.5); }
+}
+
+.users-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 0.4rem;
+}
+
+.users-subtitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.35);
+}
+
+.users-neon-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139,92,246,0.4), rgba(0,212,255,0.3), transparent);
+  margin: 0 0 2.5rem;
+}
+
+/* ─── Loading ───────────────────────────────────────────────── */
+.users-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem 0;
+  gap: 1.5rem;
+}
+
+.users-spinner {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.1);
+  border-top-color: #8b5cf6;
+  border-right-color: #00d4ff;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.users-loading p {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.3);
+  text-transform: uppercase;
+}
+
+/* ─── Table Wrapper ─────────────────────────────────────────── */
+.users-table-wrapper {
+  background: rgba(10, 15, 46, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+  animation: fadeInScale 0.5s ease both;
+  animation-delay: 0.1s;
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ─── Table ─────────────────────────────────────────────────── */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table thead tr {
+  background: rgba(139,92,246,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.users-table thead th {
+  padding: 16px 20px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  text-align: left;
+  white-space: nowrap;
+  display: table-cell;
+}
+
+.users-table thead th svg {
+  vertical-align: middle;
+  margin-right: 5px;
+  color: rgba(139,92,246,0.6);
+}
+
+/* ─── Rows ──────────────────────────────────────────────────── */
+.user-row {
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.3s;
+  animation: rowSlideIn 0.4s ease both;
+}
+
+@keyframes rowSlideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.user-row:hover {
+  background: rgba(139,92,246,0.05);
+}
+
+.user-row:last-child {
+  border-bottom: none;
+}
+
+.users-table td {
+  padding: 14px 20px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.7);
+  vertical-align: middle;
+}
+
+.row-index {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.2) !important;
+  letter-spacing: 0.05em;
+}
+
+.row-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85) !important;
+}
+
+.user-avatar-mini {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00d4ff, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.row-email {
+  color: rgba(255,255,255,0.4) !important;
+  font-size: 0.85rem;
+}
+
+/* ─── Role Chip ─────────────────────────────────────────────── */
+.role-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.role-chip.admin {
+  background: rgba(0,212,255,0.1);
+  border: 1px solid rgba(0,212,255,0.3);
+  color: #00d4ff;
+}
+
+.role-chip.user {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.4);
+}
+
+/* ─── Responsive ────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .users-table thead th,
+  .users-table td { padding: 12px 14px; font-size: 0.8rem; }
+  .users-title { font-size: 1.6rem; }
+}

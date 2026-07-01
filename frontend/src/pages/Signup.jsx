@@ -1,94 +1,141 @@
-import React, { useState } from 'react'
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import {useNavigate} from 'react-router-dom';
-
-
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '../components/Hooks/UserContext';
-
+import { FiMail, FiLock, FiUser, FiUserPlus, FiZap, FiArrowRight } from 'react-icons/fi';
+import './Auth.css';
 
 function Signup() {
-
-
   const navigate = useNavigate();
-  const {signup} = useUser();
+  const { signup } = useUser();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSignup = async (e) => {
-
     e.preventDefault();
+    setLoading(true);
+    setError("");
 
     try {
-
-        await signup(name, email, password);
-
-      alert("Account created successfully");
-
+      await signup(name, email, password);
       navigate("/");
-
-    } catch (error) {
-
-   console.log(error);
-
-   if (error.response) {
-      console.log(error.response.data);
-   } else {
-      console.log("Server error or network problem");
-   }
-}
+    } catch (err) {
+      console.log(err);
+      setError(
+        err.response?.data?.message || "Server error or network problem"
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <Container className="mt-5" style={{maxWidth:"500px"}}>
+    <div className="auth-page">
+      <div className="auth-orb auth-orb-1" />
+      <div className="auth-orb auth-orb-2" />
+      <div className="auth-orb auth-orb-3" />
 
-      <h2 className="text-center mb-4">Create Account</h2>
+      <div className="auth-wrapper">
+        <div className="auth-brand">
+          <div className="auth-brand-icon"><FiZap /></div>
+          <span className="auth-brand-text">NEXUS<span className="brand-accent">BLOG</span></span>
+        </div>
 
-      <Form onSubmit={handleSignup}>
+        <div className="auth-card">
+          <div className="scan-line" aria-hidden="true" />
 
-        <Form.Group className="mb-3">
-          <Form.Label>Name</Form.Label>
+          <div className="auth-card-inner">
+            <div className="auth-header">
+              <div className="auth-icon-ring">
+                <FiUserPlus />
+              </div>
+              <h1 className="auth-title">Join NEXUS</h1>
+              <p className="auth-subtitle">Create your account and start writing</p>
+            </div>
 
-          <Form.Control
-            type="text"
-            placeholder="Enter name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </Form.Group>
+            {error && (
+              <div className="auth-error">
+                <span>⚠ {error}</span>
+              </div>
+            )}
 
-        <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
+            <form onSubmit={handleSignup} className="auth-form">
+              <div className="input-group-neo">
+                <label className="input-label">Full Name</label>
+                <div className="input-wrapper">
+                  <FiUser className="input-icon" />
+                  <input
+                    type="text"
+                    className="neo-input"
+                    placeholder="John Doe"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    id="signup-name"
+                  />
+                </div>
+              </div>
 
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Group>
+              <div className="input-group-neo">
+                <label className="input-label">Email Address</label>
+                <div className="input-wrapper">
+                  <FiMail className="input-icon" />
+                  <input
+                    type="email"
+                    className="neo-input"
+                    placeholder="your@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    id="signup-email"
+                  />
+                </div>
+              </div>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
+              <div className="input-group-neo">
+                <label className="input-label">Password</label>
+                <div className="input-wrapper">
+                  <FiLock className="input-icon" />
+                  <input
+                    type="password"
+                    className="neo-input"
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    id="signup-password"
+                  />
+                </div>
+              </div>
 
-          <Form.Control
-            type="password"
-            placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
+              <button
+                type="submit"
+                className={`auth-submit-btn ${loading ? 'loading' : ''}`}
+                disabled={loading}
+                id="signup-submit"
+              >
+                {loading ? (
+                  <span className="btn-spinner" />
+                ) : (
+                  <>
+                    <span>Create Account</span>
+                    <FiArrowRight />
+                  </>
+                )}
+              </button>
+            </form>
 
-        <Button variant="success" className="w-100" type="submit">
-          Signup
-        </Button>
-        
-      </Form>
-
-    </Container>
+            <p className="auth-switch">
+              Already have an account?{" "}
+              <Link to="/login" className="auth-switch-link">Sign In</Link>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

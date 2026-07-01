@@ -8,6 +8,8 @@ import BlogDetails from "../pages/BlogDetails";
 import CreateBlog from "../pages/CreateBlog";
 import EditBlog from "../pages/EditBlog";
 import Profile from "../pages/Profile";
+import MyBlogs from "../pages/MyBlogs";
+import AllUsers from "../pages/Allusers";
 
 function Router() {
 
@@ -38,6 +40,10 @@ function Router() {
       />
 
       <Route path="/profile" element={<Profile/>}/>
+
+      <Route path="/my-blogs" element={<MyBlogs />}/>
+
+      <Route path="/all-users" element={<AllUsers/>}/>
       
     </Routes>
   );

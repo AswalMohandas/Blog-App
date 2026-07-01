@@ -1,93 +1,155 @@
-import React from 'react'
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useUser } from './Hooks/UserContext';
-
-
+import { FiHome, FiEdit3, FiUser, FiBookOpen, FiUsers, FiLogOut, FiLogIn, FiUserPlus, FiMenu, FiX, FiZap } from 'react-icons/fi';
+import './Navbar.css';
 
 function Navigation() {
-const {user, logout} = useUser();
+  const { user, logout } = useUser();
+  const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+    setDropdownOpen(false);
+  }, [location]);
+
+  const navLinks = [
+    { to: '/', label: 'Home', icon: <FiHome /> },
+  ];
+
   return (
-    <Navbar expand="lg" bg="primary" data-bs-theme="dark">
-      <Container>
-        <Navbar.Brand href="#home">Logo</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
-          </Nav>
-            
-         {/* Right side login button */}
-       
-   {
-  user ? (
-    <NavDropdown
-      title={`👤 ${user.name}`}
-      id="profile-dropdown"
-      align="end"
-      className="me-3"
-    >
-      <NavDropdown.Item as={Link} to="/profile">
-        My Profile
-      </NavDropdown.Item>
+    <nav className={`nexus-navbar ${scrolled ? 'scrolled' : ''}`}>
+      {/* Animated top border */}
+      <div className="navbar-glow-line" />
 
-      <NavDropdown.Item as={Link} to="/my-blogs">
-        My Blogs
-      </NavDropdown.Item>
+      <div className="navbar-inner">
+        {/* Logo */}
+        <Link to="/" className="navbar-logo">
+          <div className="logo-icon">
+            <FiZap />
+          </div>
+          <span className="logo-text">
+            NEX<span className="logo-accent">US</span>
+          </span>
+          <span className="logo-tag">BLOG</span>
+        </Link>
 
-      <NavDropdown.Item as={Link} to="/create-blog">
-        Create Blog
-      </NavDropdown.Item>
+        {/* Center Nav Links */}
+        <div className={`navbar-links ${menuOpen ? 'open' : ''}`}>
+          {navLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`nav-link ${location.pathname === link.to ? 'active' : ''}`}
+            >
+              <span className="nav-link-icon">{link.icon}</span>
+              <span>{link.label}</span>
+            </Link>
+          ))}
 
-      <NavDropdown.Divider />
+          {/* Create Blog always visible */}
+          <Link
+            to="/create-blog"
+            className={`nav-link ${location.pathname === '/create-blog' ? 'active' : ''}`}
+          >
+            <span className="nav-link-icon"><FiEdit3 /></span>
+            <span>Create</span>
+          </Link>
 
-      <NavDropdown.Item onClick={logout}>
-        Logout
-      </NavDropdown.Item>
-    </NavDropdown>
-  ) : (
-    <Link to="/login">
-      <Button variant="light">
-        Login
-      </Button>
-    </Link>
-  )
+          {/* Mobile: auth links */}
+          {!user && (
+            <div className="mobile-auth-links">
+              <Link to="/login" className="nav-link">
+                <span className="nav-link-icon"><FiLogIn /></span>
+                <span>Login</span>
+              </Link>
+              <Link to="/signup" className="nav-link">
+                <span className="nav-link-icon"><FiUserPlus /></span>
+                <span>Signup</span>
+              </Link>
+            </div>
+          )}
+        </div>
+
+        {/* Right side actions */}
+        <div className="navbar-actions">
+          {user ? (
+            <div className="user-menu">
+              <button
+                className="user-avatar-btn"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                aria-label="User menu"
+              >
+                <div className="avatar-ring">
+                  <div className="avatar-inner">
+                    {user.name?.charAt(0).toUpperCase() || 'U'}
+                  </div>
+                </div>
+                <span className="user-name-display">{user.name?.split(' ')[0]}</span>
+                <div className={`dropdown-arrow ${dropdownOpen ? 'open' : ''}`}>▾</div>
+              </button>
+
+              {dropdownOpen && (
+                <div className="user-dropdown">
+                  <div className="dropdown-header">
+                    <div className="dropdown-avatar">
+                      {user.name?.charAt(0).toUpperCase() || 'U'}
+                    </div>
+                    <div>
+                      <div className="dropdown-name">{user.name}</div>
+                      <div className="dropdown-email">{user.email}</div>
+                    </div>
+                  </div>
+                  <div className="dropdown-divider" />
+                  <Link to="/profile" className="dropdown-item">
+                    <FiUser /> My Profile
+                  </Link>
+                  <Link to="/my-blogs" className="dropdown-item">
+                    <FiBookOpen /> My Blogs
+                  </Link>
+                  {user?.role === 'admin' && (
+                    <Link to="/all-users" className="dropdown-item">
+                      <FiUsers /> All Users
+                    </Link>
+                  )}
+                  <div className="dropdown-divider" />
+                  <button className="dropdown-item danger" onClick={logout}>
+                    <FiLogOut /> Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="auth-buttons">
+              <Link to="/login" className="btn-ghost">Login</Link>
+              <Link to="/signup" className="btn-neon">Get Started</Link>
+            </div>
+          )}
+
+          {/* Mobile hamburger */}
+          <button
+            className="hamburger-btn"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? <FiX /> : <FiMenu />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile overlay */}
+      {menuOpen && <div className="mobile-overlay" onClick={() => setMenuOpen(false)} />}
+    </nav>
+  );
 }
 
-    {/* Create new Blog */}
-
-   <nav className="me-auto text-white me-3">
-  
-
-    <Link to="/create-blog" className="me-3">
-     <Button variant="light">
-     Create Blog
-     </Button>
-     </Link>
-   </nav>
-
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-
-   
-  )
-}
-
-export default Navigation
+export default Navigation;

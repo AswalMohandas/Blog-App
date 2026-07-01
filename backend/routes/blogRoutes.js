@@ -3,6 +3,7 @@ const router = express.Router();
 const Blog = require('../models/blog.js');
 const upload = require('../Middleware/upload.js');
 const auth = require("../Middleware/auth.js");
+const { getMyBlogs } = require('../controllers/blogController');
 
 
 //get all blogs
@@ -167,6 +168,33 @@ router.delete(
     }
   }
 );
+
+    //blogRoutes.js
+
+   router.get("/myblogs", auth, getMyBlogs);
+
+   //Get all users details (Admin only)
+
+   router.get("/all-users",auth,async (req, res) => {
+    try{
+
+      // check if logged in user is admin 
+      
+      if (req.user.role !== "admin") {
+        return res.status(403).json({
+          message:"access denied"
+        });
+      }
+
+      const user = await user.find().select("-password");
+
+      res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json({
+        message: error.message
+      });
+    }
+   });
 
 module.exports = router;
 
